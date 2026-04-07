@@ -11,7 +11,7 @@
             Y = y;
         }
 
-        //метод сложения координат для движения
+        // Метод сложения координат для движения
         public Coordinats Add(Coordinats other)
         {
             return new Coordinats((short)(X + other.X), (short)(Y + other.Y));
