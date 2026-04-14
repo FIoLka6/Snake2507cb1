@@ -82,8 +82,8 @@ internal class Program
                 start = false;
             }
 
-            // Увеличение скорости при росте счёта (базовая задержка 150мс, минимум 60мс)
-            int delay = Math.Max(60, 150 - snake.Score * 3);
+            // Увеличение скорости при росте счёта (базовая задержка 130мс, минимум 30мс)
+            int delay = Math.Max(30, 130 - snake.Score * 3);
             Thread.Sleep(delay);
         }
         Console.ReadKey();
