@@ -1,58 +1,64 @@
-﻿using Snake2507cb1.Models;
+using Snake2507cb1.Models;
+using System;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
         Snake snake = new Snake();
+        Grid grid = new Grid();
         bool start = true;
-
-        Console.WriteLine("Управление: W, A, S, D. Выход: 1");
-
         while (start)
         {
-            // Ждем нажатия клавиши
+            grid.Render(snake);
             char ch = Console.ReadKey().KeyChar;
-            Console.WriteLine(); // Переход на новую строку после нажатия
 
             switch (ch)
             {
                 case 'w':
-                    // Вверх (Y - 1)
-                    snake.ChangeVector(new Vector(0, -1));
-                    snake.Move();
-                    Console.WriteLine(snake.ToString());
-                    break;
-
+                    {
+                        //изменить вектор
+                        snake.Vector.SetDirection(ch);
+                        //изменить коородинату
+                        grid.MoveSnake(snake);
+                        Console.WriteLine(snake.ToString());
+                        break;
+                    }
                 case 's':
-                    // Вниз (Y + 1)
-                    snake.ChangeVector(new Vector(0, 1));
-                    snake.Move();
-                    Console.WriteLine(snake.ToString());
-                    break;
+                    {
+                        //изменить вектор
+                        snake.Vector.SetDirection(ch);
+                        //изменить коородинату
+                        grid.MoveSnake(snake);
+                        Console.WriteLine(snake.ToString());
+                        break;
+                    }
 
                 case 'a':
-                    // Влево (X - 1)
-                    snake.ChangeVector(new Vector(-1, 0));
-                    snake.Move();
-                    Console.WriteLine(snake.ToString());
-                    break;
+                    {
+                        //изменить вектор
+                        snake.Vector.SetDirection(ch);
+                        //изменить коородинату
+                        grid.MoveSnake(snake);
+                        Console.WriteLine(snake.ToString());
+                        break;
+                    }
 
                 case 'd':
-                    // Вправо (X + 1)
-                    snake.ChangeVector(new Vector(1, 0));
-                    snake.Move();
-                    Console.WriteLine(snake.ToString());
-                    break;
+                    {
+                        //изменить вектор
+                        snake.Vector.SetDirection(ch);
+                        //изменить коородинату
+                        grid.MoveSnake(snake);
+                        Console.WriteLine(snake.ToString());
+                        break;
+                    }
 
                 case '1':
-                    start = false;
-                    break;
-
-                default:
-                    // Обработка неверного ввода
-                    Console.WriteLine("Неверная команда! Используйте W, A, S, D или 1.");
-                    break;
+                    {
+                        start = false;
+                        break;
+                    }
             }
         }
     }
