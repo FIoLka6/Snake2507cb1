@@ -41,6 +41,7 @@ internal class Program
                             Console.WriteLine(snake.ToString());
                             break;
                         }
+
                     case 'a':
                         {
                             //изменить вектор
@@ -49,6 +50,7 @@ internal class Program
                             Console.WriteLine(snake.ToString());
                             break;
                         }
+
                     case 'd':
                         {
                             //изменить вектор
@@ -57,6 +59,7 @@ internal class Program
                             Console.WriteLine(snake.ToString());
                             break;
                         }
+
                     case '1':
                         {
                             start = false;
@@ -79,7 +82,10 @@ internal class Program
                 start = false;
             }
 
-            Thread.Sleep(150); // Скорость игры
+            // Увеличение скорости при росте счёта (базовая задержка 150мс, минимум 60мс)
+            int delay = Math.Max(60, 150 - snake.Score * 3);
+            Thread.Sleep(delay);
         }
+        Console.ReadKey();
     }
 }
