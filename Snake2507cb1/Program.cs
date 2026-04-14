@@ -1,5 +1,6 @@
 using Snake2507cb1.Models;
 using System;
+using System.Threading;
 
 internal class Program
 {
@@ -10,56 +11,75 @@ internal class Program
         bool start = true;
         while (start)
         {
-            grid.Render(snake);
-            char ch = Console.ReadKey().KeyChar;
-
-            switch (ch)
+            // Неблокирующий ввод для зацикленного движения
+            if (Console.KeyAvailable)
             {
-                case 'w':
-                    {
-                        //изменить вектор
-                        snake.Vector.SetDirection(ch);
-                        //изменить коородинату
-                        grid.MoveSnake(snake);
-                        Console.WriteLine(snake.ToString());
-                        break;
-                    }
-                case 's':
-                    {
-                        //изменить вектор
-                        snake.Vector.SetDirection(ch);
-                        //изменить коородинату
-                        grid.MoveSnake(snake);
-                        Console.WriteLine(snake.ToString());
-                        break;
-                    }
+                var keyInfo = Console.ReadKey(true);
+                char ch = keyInfo.KeyChar;
 
-                case 'a':
-                    {
-                        //изменить вектор
-                        snake.Vector.SetDirection(ch);
-                        //изменить коородинату
-                        grid.MoveSnake(snake);
-                        Console.WriteLine(snake.ToString());
-                        break;
-                    }
+                // Поддержка стрелок (маппим на WASD для сохранения логики switch)
+                if (keyInfo.Key == ConsoleKey.UpArrow) ch = 'w';
+                if (keyInfo.Key == ConsoleKey.DownArrow) ch = 's';
+                if (keyInfo.Key == ConsoleKey.LeftArrow) ch = 'a';
+                if (keyInfo.Key == ConsoleKey.RightArrow) ch = 'd';
 
-                case 'd':
-                    {
-                        //изменить вектор
-                        snake.Vector.SetDirection(ch);
-                        //изменить коородинату
-                        grid.MoveSnake(snake);
-                        Console.WriteLine(snake.ToString());
-                        break;
-                    }
-
-                case '1':
-                    {
-                        start = false;
-                        break;
-                    }
+                switch (ch)
+                {
+                    case 'w':
+                        {
+                            //изменить вектор
+                            snake.Vector.SetDirection(ch);
+                            //изменить коородинату
+                            Console.WriteLine(snake.ToString());
+                            break;
+                        }
+                    case 's':
+                        {
+                            //изменить вектор
+                            snake.Vector.SetDirection(ch);
+                            //изменить коородинату
+                            Console.WriteLine(snake.ToString());
+                            break;
+                        }
+                    case 'a':
+                        {
+                            //изменить вектор
+                            snake.Vector.SetDirection(ch);
+                            //изменить коородинату
+                            Console.WriteLine(snake.ToString());
+                            break;
+                        }
+                    case 'd':
+                        {
+                            //изменить вектор
+                            snake.Vector.SetDirection(ch);
+                            //изменить коородинату
+                            Console.WriteLine(snake.ToString());
+                            break;
+                        }
+                    case '1':
+                        {
+                            start = false;
+                            break;
+                        }
+                }
             }
+
+            // Автоматическое обновление и отрисовка каждый тик
+            grid.Update(snake);
+            grid.Render(snake);
+
+            // Проверка столкновения с границей или своим телом
+            if (grid.IsHitBorder(snake) || grid.IsHitSelf(snake))
+            {
+                Console.SetCursorPosition(0, grid.Height + 4);
+                Console.WriteLine("Game Over! Столкновение с границей или телом.");
+                Console.WriteLine($"Итоговый счёт: {snake.Score}");
+                Console.ReadKey();
+                start = false;
+            }
+
+            Thread.Sleep(150); // Скорость игры
         }
     }
 }

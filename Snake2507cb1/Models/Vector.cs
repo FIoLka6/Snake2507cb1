@@ -15,7 +15,7 @@
                 }
                 else
                 {
-                    throw new Exception($"Не верное значение координат {value.ToString()}");
+                    throw new System.Exception($"Не верное значение координат {value.ToString()}");
                 }
             }
         }
@@ -35,13 +35,21 @@
         //todo реализовать методы изменнеия вектора (wsad)
         public void SetDirection(char key)
         {
+            short newX = 0, newY = 0;
             switch (char.ToLower(key))
             {
-                case 'w': Coordinats = new Coordinats(0, -1); break;
-                case 's': Coordinats = new Coordinats(0, 1); break;
-                case 'a': Coordinats = new Coordinats(-1, 0); break;
-                case 'd': Coordinats = new Coordinats(1, 0); break;
+                case 'w': newY = -1; break;
+                case 's': newY = 1; break;
+                case 'a': newX = -1; break;
+                case 'd': newX = 1; break;
+                default: return;
             }
+
+            // Запрет разворота на 180 градусов
+            if (newX == -coordinats.X && newY == -coordinats.Y)
+                return;
+
+            Coordinats = new Coordinats(newX, newY);
         }
     }
 }
